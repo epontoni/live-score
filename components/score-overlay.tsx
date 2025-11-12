@@ -107,12 +107,22 @@ export function ScoreOverlay() {
         )}
       </AnimatePresence>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4">
         {/* <IpetymLogo className="h-24 w-24 text-white opacity-90" /> */}
-        <Image src={IpetymLogo} alt="IPETyM Logo" className="h-auto w-20" />
-        <div className="font-headline text-sm text-white opacity-80 [text-shadow:_0_1px_2px_rgb(0_0_0_/_50%)] text-center max-w-xs">
-          <p>IPETyM 256</p>
-          <p>"General Libertador Don José de San Martín"</p>
+        <div className="border-r-2 pr-4">
+          <span className="text-yellow-300">Feria</span>
+          <br />
+          <span className="uppercase font-bold">Lúdica</span>
+        </div>
+
+        <div className="flex gap-2 items-center">
+          <Image src={IpetymLogo} alt="IPETyM Logo" className="h-auto w-20" />
+          <div className="font-headline text-sm text-white opacity-80 [text-shadow:_0_1px_2px_rgb(0_0_0_/_50%)] text-left max-w-xs">
+            <p className="font-bold text-2xl">IPETyM 256</p>
+            <p className="text-md">
+              "General Libertador Don José de San Martín"
+            </p>
+          </div>
         </div>
       </div>
 
@@ -123,7 +133,7 @@ export function ScoreOverlay() {
           size="icon"
           className="text-white hover:bg-white/20 hover:text-white rounded-full h-12 w-12"
         >
-          <Link href="/puntaje">
+          <Link href="/puntaje" target="_blank" rel="noopener noreferrer">
             <Settings className="h-6 w-6" />
             <span className="sr-only">Configuración de Puntaje</span>
           </Link>
