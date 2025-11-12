@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import useSound from "use-sound";
 import { socket } from "@/lib/socket";
 import { sendPunto, sendGanador } from "@/lib/api";
@@ -125,15 +125,7 @@ export function useScoreStore() {
         ? state.teamBName
         : null;
 
-    if (calculatedWinner) {
-      // =======================================================================
-      // SOCKET.IO: Notificar que alguien ha ganado.
-      // El memo se recalcula cada vez que las puntuaciones cambian.
-      //
-      // Ejemplo:
-      socket.emit("score:max", { winner: calculatedWinner });
-      // =======================================================================
-    }
+    // Do not emit socket events inside render/memo — side effects belong in effects.
 
     return calculatedWinner;
   }, [
@@ -143,6 +135,16 @@ export function useScoreStore() {
     state.teamAName,
     state.teamBName,
   ]);
+
+  // Emit score:max exactly once when a winner is first detected.
+  const _prevWinner = useRef<string | null>(null);
+  useEffect(() => {
+    if (winner && _prevWinner.current !== winner) {
+      socket.emit("score:max", { winner });
+      console.log("Emitted score:max for winner:", winner);
+      _prevWinner.current = winner;
+    }
+  }, [winner]);
 
   // Play win sound when a winner is detected
   useEffect(() => {

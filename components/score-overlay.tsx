@@ -80,12 +80,12 @@ export function ScoreOverlay() {
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-600/50 backdrop-blur-sm p-4 md:p-8 rounded-lg shadow-2xl"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-600/50 backdrop-blur-sm p-4 md:p-8 rounded-lg shadow-2xl animate-[ping_2s_ease-in-out_infinite]"
           >
             <p className="text-4xl md:text-6xl font-bold font-headline text-white [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)] text-center">
               ¡GANADOR!
             </p>
-            <p className="text-2xl md:text-4xl font-headline text-white/90 text-center mt-2">
+            <p className="text-2xl md:text-4xl font-headline  text-center mt-2 uppercase font-bold text-red-100 [text-shadow:_0_2px_4px_rgb(0_0_0_/_50%)]">
               {winner}
             </p>
           </motion.div>
