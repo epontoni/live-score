@@ -1,0 +1,45 @@
+from microbit import *
+
+# UART por USB
+uart.init(baudrate=115200)
+
+# Pin del relé (cambiá a pin1/pin2 si corresponde)
+relay_pin = pin0
+
+# Si tu módulo es "activo en bajo", invertí 0/1
+RELAY_ON  = 1
+RELAY_OFF = 0
+
+def blink_relay(times, on_ms=200, off_ms=200):
+    for _ in range(times):
+        relay_pin.write_digital(RELAY_ON)
+        sleep(on_ms)
+        relay_pin.write_digital(RELAY_OFF)
+        sleep(off_ms)
+
+buffer = ""
+
+while True:
+    data = uart.read()
+    if data:
+        try:
+            buffer += data.decode()
+        except:
+            continue
+
+        # Procesar múltiples líneas si entraron juntas
+        while "\n" in buffer:
+            line, buffer = buffer.split("\n", 1)
+            cmd = line.strip()
+
+            if cmd == "BLINK_1":
+                blink_relay(1)
+                uart.write(b"OK BLINK_1\n")
+            elif cmd == "BLINK_2":
+                blink_relay(2)
+                uart.write(b"OK BLINK_2\n")
+            elif cmd == "BLINK_5":
+                blink_relay(5)
+                uart.write(b"OK BLINK_5\n")
+            else:
+                uart.write(b"ERR Unknown: " + cmd.encode() + b"\n")
